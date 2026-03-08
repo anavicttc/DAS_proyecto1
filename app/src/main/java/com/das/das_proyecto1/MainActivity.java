@@ -1,71 +1,109 @@
 package com.das.das_proyecto1;
 
-
+import android.Manifest;
+import android.content.Intent;
+import android.content.pm.PackageManager;
+import android.os.Build;
 import android.os.Bundle;
-import android.view.LayoutInflater;
-import android.view.View;
-import android.widget.EditText;
-
-import androidx.appcompat.app.AlertDialog;
+import android.os.Handler;
+import android.os.Looper;
+import androidx.activity.OnBackPressedCallback;
+import androidx.appcompat.app.ActionBarDrawerToggle;
 import androidx.appcompat.app.AppCompatActivity;
-import androidx.recyclerview.widget.LinearLayoutManager;
-import androidx.recyclerview.widget.RecyclerView;
-
-import java.util.List;
+import androidx.appcompat.widget.Toolbar;
+import androidx.core.app.ActivityCompat;
+import androidx.core.content.ContextCompat;
+import androidx.core.view.GravityCompat;
+import androidx.drawerlayout.widget.DrawerLayout;
+import androidx.fragment.app.Fragment;
+import com.google.android.material.navigation.NavigationView;
 
 public class MainActivity extends AppCompatActivity {
 
-    private BaseDatosHelper dbHelper;
-    private DiaAdapter adapter;
-    private List<Dia> listaDias;
-
+    private DrawerLayout drawerLayout;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
 
-        dbHelper = new BaseDatosHelper(this);
-        listaDias = dbHelper.obtenerMenu();
+        //toolbar
+        Toolbar toolbar = findViewById(R.id.toolbar);
+        setSupportActionBar(toolbar);
 
-        RecyclerView rv = findViewById(R.id.recyclerViewMenu);
-        rv.setLayoutManager(new LinearLayoutManager(this)); //
+        //menú lateral (navigation drawer)
+        drawerLayout = findViewById(R.id.drawer_layout);
+        NavigationView navigationView = findViewById(R.id.nav_view);
 
-        // Al hacer clic en un día, abrimos el diálogo de edición [cite: 57]
-        adapter = new DiaAdapter(listaDias, dia -> mostrarDialogoEdicion(dia));
-        rv.setAdapter(adapter);
+        //botón de hamburguesa
+        ActionBarDrawerToggle toggle = new ActionBarDrawerToggle(this, drawerLayout, toolbar,
+                R.string.open_nav, R.string.close_nav);
+        drawerLayout.addDrawerListener(toggle);
+        toggle.syncState();
+
+        navigationView.setNavigationItemSelectedListener(item -> {
+            Fragment fragmentSeleccionado = null;
+            int itemId = item.getItemId();
+            if (itemId == R.id.nav_menu_semanal) {//si tocamos menú semanal que nos lleve ahí
+                fragmentSeleccionado = new MenuSemanalFragment();
+                toolbar.setTitle("Menú Semanal");
+            } else if (itemId == R.id.nav_lista_compra) {
+                //lista de la compra
+                toolbar.setTitle("Lista de la Compra");
+            } else if (itemId == R.id.nav_ideas_comer) {
+                //ideas para comer
+                toolbar.setTitle("Ideas Para Comer");
+            }
+
+            //cambio de pantalla
+            if (fragmentSeleccionado != null) {
+                getSupportFragmentManager().beginTransaction()
+                        .replace(R.id.fragment_container, fragmentSeleccionado)
+                        .commit();
+            }
+            //cerrar caja
+            drawerLayout.closeDrawer(GravityCompat.START);
+            return true;
+        });
+        //cargamos menú semanal nada más abrir la app
+        if (savedInstanceState == null) {
+            getSupportFragmentManager().beginTransaction()
+                    .replace(R.id.fragment_container, new MenuSemanalFragment())
+                    .commit();
+            navigationView.setCheckedItem(R.id.nav_menu_semanal);
+            toolbar.setTitle("Menú Semanal");
+        }
+
+        // necesario para que cuando demos para atrás con el menú lateral abierto lo cerremos
+        getOnBackPressedDispatcher().addCallback(this, new OnBackPressedCallback(true) {
+            @Override
+            public void handleOnBackPressed() {
+                if (drawerLayout.isDrawerOpen(GravityCompat.START)) {
+                    // menú lateral abierto -> cerrarlo
+                    drawerLayout.closeDrawer(GravityCompat.START);
+                } else {
+                    //menú lateral cerrado -> salir normal
+                    setEnabled(false);
+                    getOnBackPressedDispatcher().onBackPressed();
+                }
+            }
+        });
+
+        //comprobamos permisos y lanzamos noti
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.TIRAMISU) {
+            if (ContextCompat.checkSelfPermission(this, Manifest.permission.POST_NOTIFICATIONS) != PackageManager.PERMISSION_GRANTED) {
+                ActivityCompat.requestPermissions(this, new String[]{Manifest.permission.POST_NOTIFICATIONS}, 101);
+            } else {
+                lanzarNotificacionPrueba();
+            }
+        } else {
+            lanzarNotificacionPrueba();
+        }
     }
-    private void mostrarDialogoEdicion(Dia dia) {
-        AlertDialog.Builder builder = new AlertDialog.Builder(this);
-        LayoutInflater inflater = getLayoutInflater();
-        View view = inflater.inflate(R.layout.dialogo, null);
-        //referencias xml:
-        EditText etDes = view.findViewById(R.id.etDesayuno);
-        EditText etAlm = view.findViewById(R.id.etAlmuerzo);
-        EditText etCom = view.findViewById(R.id.etComida);
-        EditText etMer = view.findViewById(R.id.etMerienda);
-        EditText etCen = view.findViewById(R.id.etCena);
-
-        //cargar datos
-        etDes.setText(dia.getDesayuno());
-        etAlm.setText(dia.getAlmuerzo());
-        etCom.setText(dia.getComida());
-        etMer.setText(dia.getMerienda());
-        etCen.setText(dia.getCena());
-
-        builder.setView(view)
-                .setTitle("Editar " + dia.getNombreDia())
-                .setPositiveButton("Guardar", (dialog, id) -> {
-                    // Actualizar objeto y base de datos
-                    dia.setDesayuno(etDes.getText().toString());
-                    dia.setAlmuerzo(etAlm.getText().toString());
-                    dia.setComida(etCom.getText().toString());
-                    dia.setMerienda(etMer.getText().toString());
-                    dia.setCena(etCen.getText().toString());
-
-                    dbHelper.actualizarDia(dia);
-                    adapter.notifyDataSetChanged(); // Refrescar lista
-                })
-                .setNegativeButton("Cancelar", null);
-        builder.create().show();
+    //lanzar notificación a los 5s de abrir la app (después de haber aceptado las notis y cerrarla)
+    private void lanzarNotificacionPrueba() {
+        new Handler(Looper.getMainLooper()).postDelayed(() -> {
+            Intent intent = new Intent(MainActivity.this, Notificaciones.class);
+            sendBroadcast(intent); //receiver
+        }, 5000);//5s
     }
 }

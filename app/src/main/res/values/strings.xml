@@ -1,3 +1,5 @@
 <resources>
-    <string name="app_name">DAS_proyecto1</string>
+    <string name="app_name">Ñam</string>
+    <string name="close_nav">Cerrar</string>
+    <string name="open_nav">Abrir</string>
 </resources>
