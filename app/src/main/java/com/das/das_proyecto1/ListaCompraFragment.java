@@ -47,9 +47,9 @@ public class ListaCompraFragment extends Fragment {
                 //noti a los 5s REVISAR
                 programarNotificacion(nombreProducto);
 
-                Toast.makeText(requireContext(), "Añadido a la lista", Toast.LENGTH_SHORT).show();
+                Toast.makeText(requireContext(), R.string.añadido_a_la_lista, Toast.LENGTH_SHORT).show();
             } else {
-                Toast.makeText(requireContext(), "Escribe un producto primero", Toast.LENGTH_SHORT).show();
+                Toast.makeText(requireContext(),R.string.anadir_lista_error , Toast.LENGTH_SHORT).show();
             }
         });
         return view;
@@ -61,13 +61,13 @@ public class ListaCompraFragment extends Fragment {
         recyclerView.setAdapter(adapter);
     }
 
-    //notificación local
+    //notificación local cuando añadimos producto a la lista
     private void programarNotificacion(String producto) {
         new Handler(Looper.getMainLooper()).postDelayed(() -> {
             if (getContext() != null) {
-                Intent intent = new Intent(getContext(), Notificaciones.class);
-                intent.putExtra("titulo_notificacion", "¿Vas a la compra?");
-                intent.putExtra("texto_notificacion", "Recuerda comprar: " + producto);
+                Intent intent = new Intent(getContext(), NotificacionPrincipal.class);
+                intent.putExtra("titulo_notificacion", getString(R.string.noti_compra));
+                intent.putExtra("texto_notificacion", getString(R.string.noti_compra_sub) + " " + producto);
                 getContext().sendBroadcast(intent); //disparar aviso
             }
         }, 5000); //5s
@@ -91,16 +91,16 @@ public class ListaCompraFragment extends Fragment {
             holder.ivBorrar.setOnClickListener(v -> {
                 //diálogo confirmación
                 new androidx.appcompat.app.AlertDialog.Builder(requireContext())
-                        .setTitle("Borrar producto")
-                        .setMessage("¿Quieres quitar '" + producto.getNombre() + "' de la lista?")
-                        .setPositiveButton("Sí, borrar", (dialog, which) -> {
-                            //borrar de la vd
+                        .setTitle(R.string.borrar_lista)
+                        .setMessage(getString(R.string.mensaje_quitar)+" " + producto.getNombre() +"?")
+                        .setPositiveButton(R.string.si_borrar_lista, (dialog, which) -> {
+                            //borrar de la bd
                             bdHelper.borrarProducto(producto.getId());
                             //recargar la página
                             cargarProductos();
-                            Toast.makeText(requireContext(), "Producto eliminado", Toast.LENGTH_SHORT).show();
+                            Toast.makeText(requireContext(), R.string.producto_eliminado, Toast.LENGTH_SHORT).show();
                         })
-                        .setNegativeButton("Cancelar", null)
+                        .setNegativeButton(R.string.cancelar, null)
                         .show();
             });
         }

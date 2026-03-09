@@ -51,8 +51,8 @@ public class MenuSemanalFragment extends Fragment {
         etCen.setText(dia.getCena());
 
         builder.setView(view)
-                .setTitle("Editar " + dia.getNombreDia())
-                .setPositiveButton("Guardar", (dialog, id) -> {
+                .setTitle(getString(R.string.editar_menu) +": " + traducirDia(dia.getNombreDia()))
+                .setPositiveButton(R.string.guardar, (dialog, id) -> {
                     dia.setDesayuno(etDes.getText().toString());
                     dia.setAlmuerzo(etAlm.getText().toString());
                     dia.setComida(etCom.getText().toString());
@@ -62,7 +62,19 @@ public class MenuSemanalFragment extends Fragment {
                     dbHelper.actualizarDia(dia);
                     adapter.notifyDataSetChanged();
                 })
-                .setNegativeButton("Cancelar", null);
+                .setNegativeButton(R.string.cancelar, null);
         builder.create().show();
+    }
+    private String traducirDia(String nombreDiaDB) {
+        switch (nombreDiaDB) {
+            case "Lunes": return getString(R.string.lunes);
+            case "Martes": return getString(R.string.martes);
+            case "Miércoles": return getString(R.string.miercoles);
+            case "Jueves": return getString(R.string.jueves);
+            case "Viernes": return getString(R.string.viernes);
+            case "Sábado": return getString(R.string.sabado);
+            case "Domingo": return getString(R.string.domiengo);
+            default: return nombreDiaDB;
+        }
     }
 }

@@ -59,20 +59,22 @@ public class IdeasComerFragment extends Fragment {
 
         EditText etNombre = view.findViewById(R.id.etNombrePlato);
         EditText etDesc = view.findViewById(R.id.etDescPlato);
-        Button btnGaleria = view.findViewById(R.id.btnHacerFoto);
-        btnGaleria.setText("Elegir de la Galería");
+        Button btnGaleria = view.findViewById(R.id.btnFoto);
+        btnGaleria.setText(R.string.galeria);
 
         imagenPreviaDialogo = view.findViewById(R.id.ivFotoPrevia);
         rutaFoto = ""; //limpiamos por si aca
 
         //intent -> abrir galería
         btnGaleria.setOnClickListener(v -> {
-            Intent intent = new Intent(Intent.ACTION_PICK, MediaStore.Images.Media.EXTERNAL_CONTENT_URI);
+            Intent intent = new Intent(Intent.ACTION_OPEN_DOCUMENT);
+            intent.addCategory(Intent.CATEGORY_OPENABLE);
+            intent.setType("image/*");
             startActivityForResult(intent, CODIGO_GALERIA);
         });
         builder.setView(view)
-                .setTitle("Nuevo Plato")
-                .setPositiveButton("Guardar", (dialog, id) -> {
+                .setTitle(R.string.nuevo_plato)
+                .setPositiveButton(R.string.guardar, (dialog, id) -> {
                     String nombre = etNombre.getText().toString();
                     String desc = etDesc.getText().toString();
 
@@ -80,10 +82,10 @@ public class IdeasComerFragment extends Fragment {
                         dbHelper.insertarPlato(nombre, desc, rutaFoto);
                         cargarPlatos();
                     } else {
-                        Toast.makeText(requireContext(), "El nombre es obligatorio", Toast.LENGTH_SHORT).show();
+                        Toast.makeText(requireContext(), R.string.anadir_plato_error, Toast.LENGTH_SHORT).show();
                     }
                 })
-                .setNegativeButton("Cancelar", null);
+                .setNegativeButton(R.string.cancelar, null);
         builder.create().show();
     }
 
@@ -92,12 +94,14 @@ public class IdeasComerFragment extends Fragment {
     public void onActivityResult(int requestCode, int resultCode, @Nullable Intent data) {
         super.onActivityResult(requestCode, resultCode, data);
         if (requestCode == CODIGO_GALERIA && resultCode == Activity.RESULT_OK && data != null) {
-            Uri uriSeleccionada = data.getData(); //obtener ruta directa
-            if (uriSeleccionada != null) {
-                rutaFoto = uriSeleccionada.toString(); //convertir a string para guardar en la bd
+            Uri uri = data.getData(); //obtener ruta directa
+            if (uri != null) {
+                //añadimos permiso para conocer la uri eternamente, si no, la app crashea
+                requireActivity().getContentResolver().takePersistableUriPermission(uri, Intent.FLAG_GRANT_READ_URI_PERMISSION);
+                rutaFoto = uri.toString(); //convertir a string para guardar en la bd
                 //ventanita de la izq
                 if (imagenPreviaDialogo != null) {
-                    imagenPreviaDialogo.setImageURI(uriSeleccionada);
+                    imagenPreviaDialogo.setImageURI(uri);
                 }
             }
         }
@@ -120,8 +124,14 @@ public class IdeasComerFragment extends Fragment {
             holder.tvDesc.setText(plato.getDescripcion());
 
             if (plato.getFotoUri() != null && !plato.getFotoUri().isEmpty()) {
-                Uri uriFoto = Uri.parse(plato.getFotoUri());//cargar foto directamente desde uri
-                holder.ivFoto.setImageURI(uriFoto);
+                try { //try catch necesario para lo del permiso eterno, porq como no es completamente legal guardar la foto así
+                    Uri uriFoto = Uri.parse(plato.getFotoUri());//cargar foto directamente desde uri
+                    holder.ivFoto.setImageURI(uriFoto);
+                }
+                catch (SecurityException e){
+                    //si no hay permiso o la foto se ha borrado del móvil, ponemos la de por defecto
+                    holder.ivFoto.setImageResource(android.R.drawable.ic_menu_gallery);
+                }
             } else {
                 holder.ivFoto.setImageResource(android.R.drawable.ic_menu_gallery);
             }

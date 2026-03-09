@@ -28,12 +28,16 @@ public class DiaAdapter extends RecyclerView.Adapter<DiaAdapter.DiaViewHolder> {
     @Override
     public void onBindViewHolder(@NonNull DiaViewHolder holder, int position) {
         Dia dia = listaDias.get(position);
-        holder.tvNombreDia.setText(dia.getNombreDia());
-        holder.tvDesayuno.setText("Desayuno: " + dia.getDesayuno());
-        holder.tvAlmuerzo.setText("Almuerzo: " + dia.getAlmuerzo());
-        holder.tvComida.setText("Comida: " + dia.getComida());
-        holder.tvMerienda.setText("Merienda: " + dia.getMerienda());
-        holder.tvCena.setText("Cena: " + dia.getCena());
+        //sacamos contexto porq lo necesitamos para traducir
+        android.content.Context context = holder.itemView.getContext();
+        //traducimos:
+        holder.tvNombreDia.setText(traducirDia(context, dia.getNombreDia()));
+
+        holder.tvDesayuno.setText(context.getString(R.string.desayuno)+": " + dia.getDesayuno());
+        holder.tvAlmuerzo.setText(context.getString(R.string.almuerzo)+": " + dia.getAlmuerzo());
+        holder.tvComida.setText(context.getString(R.string.comida)+": " + dia.getComida());
+        holder.tvMerienda.setText(context.getString(R.string.merienda)+": " + dia.getMerienda());
+        holder.tvCena.setText(context.getString(R.string.cena)+": " + dia.getCena());
 
         holder.itemView.setOnClickListener(v -> listener.onItemClick(dia));
     }
@@ -42,7 +46,18 @@ public class DiaAdapter extends RecyclerView.Adapter<DiaAdapter.DiaViewHolder> {
     public int getItemCount() {
         return listaDias.size();
     }
-
+    private String traducirDia(android.content.Context context, String nombreDiaDB) {
+        switch (nombreDiaDB) {
+            case "Lunes": return context.getString(R.string.lunes);
+            case "Martes": return context.getString(R.string.martes);
+            case "Miércoles": return context.getString(R.string.miercoles);
+            case "Jueves": return context.getString(R.string.jueves);
+            case "Viernes": return context.getString(R.string.viernes);
+            case "Sábado": return context.getString(R.string.sabado);
+            case "Domingo": return context.getString(R.string.domiengo);
+            default: return nombreDiaDB;
+        }
+    }
     public static class DiaViewHolder extends RecyclerView.ViewHolder {
         TextView tvNombreDia, tvDesayuno, tvAlmuerzo, tvComida, tvMerienda, tvCena;
         public DiaViewHolder(@NonNull View itemView) {

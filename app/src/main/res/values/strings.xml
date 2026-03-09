@@ -2,4 +2,51 @@
     <string name="app_name">Ñam</string>
     <string name="close_nav">Cerrar</string>
     <string name="open_nav">Abrir</string>
+    <string name="menu_semanal">Menú Semanal</string>
+    <string name="lista_compra">Lista de la Compra</string>
+    <string name="ideas_comer">Ideas Para Comer</string>
+    <string name="cambiar_idioma">Cambiar Idioma (EN/ES)</string>
+
+    <string name="lunes">Lunes</string>
+    <string name="martes">Martes</string>
+    <string name="miercoles">Miércoles</string>
+    <string name="jueves">Jueves</string>
+    <string name="viernes">Viernes</string>
+    <string name="sabado">Sábado</string>
+    <string name="domiengo">Domingo</string>
+
+    <string name="desayuno">Desayuno</string>
+    <string name="almuerzo">Almuerzo</string>
+    <string name="comida">Comida</string>
+    <string name="merienda">Merienda</string>
+    <string name="cena">Cena</string>
+
+    <string name="editar_menu">Editar</string>
+    <string name="mensaje_menu">Introduce los platos para este día:</string>
+
+
+    <string name="anadir_lista">Añadir</string>
+    <string name="anadir_mensaje">Añadir a la lista...</string>
+    <string name="añadido_a_la_lista">Añadido a la lista</string>
+    <string name="borrar_lista">Borrar producto</string>
+    <string name="mensaje_quitar">¿Quieres quitar de la lista </string>
+    <string name="si_borrar_lista">Sí, borrar</string>
+    <string name="producto_eliminado">Producto eliminado</string>
+    <string name="anadir_lista_error">Escribe un producto primero</string>
+
+    <string name="anadir_plato">Añadir nuevo plato</string>
+    <string name="nuevo_plato">Nuevo plato</string>
+    <string name="nombre_plato">Nombre del plato</string>
+    <string name="breve_descripcion">Breve descripción</string>
+    <string name="galeria">Elegir de la galeria</string>
+    <string name="anadir_plato_error">El nombre es obligatorio</string>
+
+    <string name="noti_comer">¿Qué hay para comer hoy?</string>
+    <string name="noti_comer_sub">Revisa tu menú semanal para no olvidar tus platos :p</string>
+    <string name="noti_compra">¿Vas a la compra?</string>
+    <string name="noti_compra_sub">No olvides comprar </string>
+
+
+    <string name="guardar">Guardar</string>
+    <string name="cancelar">Cancelar</string>
 </resources>

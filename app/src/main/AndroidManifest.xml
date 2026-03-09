@@ -22,7 +22,7 @@
         </activity>
 
         <receiver
-            android:name=".Notificaciones"
+            android:name=".NotificacionPrincipal"
             android:exported="false" />
 
     </application>

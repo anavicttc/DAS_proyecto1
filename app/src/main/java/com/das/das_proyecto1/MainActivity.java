@@ -24,6 +24,15 @@ public class MainActivity extends AppCompatActivity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+        //leer el idioma de SharedPreferences
+        android.content.SharedPreferences prefs = getSharedPreferences("MisPreferencias", MODE_PRIVATE);
+        String idiomaGuardado = prefs.getString("idioma", "es"); //español por defecto
+        //aplicar idioma
+        java.util.Locale locale = new java.util.Locale(idiomaGuardado);
+        java.util.Locale.setDefault(locale);
+        android.content.res.Configuration config = new android.content.res.Configuration();
+        config.locale = locale;
+        getResources().updateConfiguration(config, getResources().getDisplayMetrics());
         setContentView(R.layout.activity_main);
 
         //toolbar
@@ -45,13 +54,26 @@ public class MainActivity extends AppCompatActivity {
             int itemId = item.getItemId();
             if (itemId == R.id.nav_menu_semanal) {//si tocamos menú semanal que nos lleve ahí
                 fragmentSeleccionado = new MenuSemanalFragment();
-                toolbar.setTitle("Menú Semanal");
+                toolbar.setTitle(getString(R.string.menu_semanal));
             } else if (itemId == R.id.nav_lista_compra) {
                 fragmentSeleccionado = new ListaCompraFragment();
-                toolbar.setTitle("Lista de la Compra");
+                toolbar.setTitle(getString(R.string.lista_compra));
             } else if (itemId == R.id.nav_ideas_comer) {
                 fragmentSeleccionado = new IdeasComerFragment();//ideas para comer
-                toolbar.setTitle("Ideas Para Comer");
+                toolbar.setTitle(getString(R.string.ideas_comer));
+            } else if (itemId==R.id.nav_idioma) {//cambiar el idioma
+                //leer idioma actual
+                android.content.SharedPreferences pref = getSharedPreferences("MisPreferencias", MODE_PRIVATE);
+                String idiomaAct = pref.getString("idioma", "es");
+                //cambiar idioma
+                String nuevoIdioma = idiomaAct.equals("es") ? "en" : "es";
+                //guardar
+                pref.edit().putString("idioma", nuevoIdioma).apply();
+                //reiniciar actividad
+                Intent intent = new Intent(MainActivity.this, MainActivity.class);
+                startActivity(intent);
+                finish();
+                return true;
             }
 
             //cambio de pantalla
@@ -70,7 +92,7 @@ public class MainActivity extends AppCompatActivity {
                     .replace(R.id.fragment_container, new MenuSemanalFragment())
                     .commit();
             navigationView.setCheckedItem(R.id.nav_menu_semanal);
-            toolbar.setTitle("Menú Semanal");
+            toolbar.setTitle(R.string.menu_semanal);
         }
 
         // necesario para que cuando demos para atrás con el menú lateral abierto lo cerremos
@@ -102,7 +124,7 @@ public class MainActivity extends AppCompatActivity {
     //lanzar notificación a los 5s de abrir la app (después de haber aceptado las notis y cerrarla)
     private void lanzarNotificacionPrueba() {
         new Handler(Looper.getMainLooper()).postDelayed(() -> {
-            Intent intent = new Intent(MainActivity.this, Notificaciones.class);
+            Intent intent = new Intent(MainActivity.this, NotificacionPrincipal.class);
             sendBroadcast(intent); //receiver
         }, 5000);//5s
     }

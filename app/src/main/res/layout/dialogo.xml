@@ -12,15 +12,15 @@
         <TextView
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:text="Introduce los platos para este día:"
+            android:text="@string/mensaje_menu"
             android:layout_marginBottom="10dp"
             android:textStyle="bold" />
 
-        <EditText android:id="@+id/etDesayuno" android:layout_width="match_parent" android:layout_height="wrap_content" android:hint="Desayuno" />
-        <EditText android:id="@+id/etAlmuerzo" android:layout_width="match_parent" android:layout_height="wrap_content" android:hint="Almuerzo" />
-        <EditText android:id="@+id/etComida" android:layout_width="match_parent" android:layout_height="wrap_content" android:hint="Comida" />
-        <EditText android:id="@+id/etMerienda" android:layout_width="match_parent" android:layout_height="wrap_content" android:hint="Merienda" />
-        <EditText android:id="@+id/etCena" android:layout_width="match_parent" android:layout_height="wrap_content" android:hint="Cena" />
+        <EditText android:id="@+id/etDesayuno" android:layout_width="match_parent" android:layout_height="wrap_content" android:hint="@string/desayuno" />
+        <EditText android:id="@+id/etAlmuerzo" android:layout_width="match_parent" android:layout_height="wrap_content" android:hint="@string/almuerzo" />
+        <EditText android:id="@+id/etComida" android:layout_width="match_parent" android:layout_height="wrap_content" android:hint="@string/comida" />
+        <EditText android:id="@+id/etMerienda" android:layout_width="match_parent" android:layout_height="wrap_content" android:hint="@string/merienda" />
+        <EditText android:id="@+id/etCena" android:layout_width="match_parent" android:layout_height="wrap_content" android:hint="@string/cena" />
 
     </LinearLayout>
 </ScrollView>

@@ -16,13 +16,13 @@
             android:layout_width="0dp"
             android:layout_height="wrap_content"
             android:layout_weight="1"
-            android:hint="Añadir a la lista..." />
+            android:hint="@string/anadir_lista" />
 
         <Button
             android:id="@+id/btnAddProducto"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="Añadir" />
+            android:text="@string/anadir_mensaje" />
     </LinearLayout>
 
     <androidx.recyclerview.widget.RecyclerView

@@ -16,6 +16,6 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_alignParentBottom="true"
-        android:text="Añadir Nuevo Plato" />
+        android:text="@string/anadir_plato" />
 
 </RelativeLayout>

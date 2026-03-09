@@ -23,11 +23,11 @@
             android:textColor="@color/black"
             android:layout_marginBottom="8dp"/>
 
-        <TextView android:id="@+id/tvDesayuno" android:layout_width="match_parent" android:layout_height="wrap_content" android:text="Desayuno: "/>
-        <TextView android:id="@+id/tvAlmuerzo" android:layout_width="match_parent" android:layout_height="wrap_content" android:text="Almuerzo: "/>
-        <TextView android:id="@+id/tvComida" android:layout_width="match_parent" android:layout_height="wrap_content" android:text="Comida: "/>
-        <TextView android:id="@+id/tvMerienda" android:layout_width="match_parent" android:layout_height="wrap_content" android:text="Merienda: "/>
-        <TextView android:id="@+id/tvCena" android:layout_width="match_parent" android:layout_height="wrap_content" android:text="Cena: "/>
+        <TextView android:id="@+id/tvDesayuno" android:layout_width="match_parent" android:layout_height="wrap_content" android:text="@string/desayuno"/>
+        <TextView android:id="@+id/tvAlmuerzo" android:layout_width="match_parent" android:layout_height="wrap_content" android:text="@string/almuerzo"/>
+        <TextView android:id="@+id/tvComida" android:layout_width="match_parent" android:layout_height="wrap_content" android:text="@string/comida"/>
+        <TextView android:id="@+id/tvMerienda" android:layout_width="match_parent" android:layout_height="wrap_content" android:text="@string/merienda"/>
+        <TextView android:id="@+id/tvCena" android:layout_width="match_parent" android:layout_height="wrap_content" android:text="@string/cena"/>
 
     </LinearLayout>
 </androidx.cardview.widget.CardView>

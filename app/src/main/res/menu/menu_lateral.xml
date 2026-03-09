@@ -4,14 +4,18 @@
         <item
             android:id="@+id/nav_menu_semanal"
             android:icon="@android:drawable/ic_menu_today"
-            android:title="Menú Semanal" />
+            android:title="@string/menu_semanal" />
         <item
             android:id="@+id/nav_lista_compra"
             android:icon="@android:drawable/ic_menu_agenda"
-            android:title="Lista de la Compra" />
+            android:title="@string/lista_compra" />
         <item
             android:id="@+id/nav_ideas_comer"
             android:icon="@android:drawable/ic_menu_gallery"
-            android:title="Ideas Para Comer" />
+            android:title="@string/ideas_comer" />
+        <item
+            android:id="@+id/nav_idioma"
+            android:icon="@android:drawable/ic_menu_mapmode"
+            android:title="@string/cambiar_idioma" />
     </group>
 </menu>
