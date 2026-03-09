@@ -1,8 +1,8 @@
 <?xml version="1.0" encoding="utf-8"?>
 <ScrollView xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
-    android:layout_height="wrap_content">
-
+    android:layout_height="wrap_content"
+    android:background="@color/rosaclaro">
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
@@ -11,9 +11,12 @@
 
         <TextView
             android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:text="@string/mensaje_menu"
+            android:layout_height="47dp"
             android:layout_marginBottom="10dp"
+            android:fontFamily="@font/playfair_semibolditalic"
+            android:text="@string/mensaje_menu"
+            android:gravity="center"
+            android:textSize="18sp"
             android:textStyle="bold" />
 
         <EditText android:id="@+id/etDesayuno" android:layout_width="match_parent" android:layout_height="wrap_content" android:hint="@string/desayuno" />

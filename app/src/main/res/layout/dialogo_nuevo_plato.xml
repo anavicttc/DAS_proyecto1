@@ -3,7 +3,8 @@
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
     android:orientation="vertical"
-    android:padding="16dp">
+    android:padding="16dp"
+    android:background="@color/grisclaro">
 
     <EditText
         android:id="@+id/etNombrePlato"
@@ -20,7 +21,9 @@
         android:id="@+id/btnFoto"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:text="Hacer Foto"
+        android:text="@string/galeria"
+        android:layout_gravity="center"
+        android:background="@color/rosa"
         android:layout_marginTop="8dp"/>
 
     <ImageView

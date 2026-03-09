@@ -3,6 +3,7 @@
     <style name="Base.Theme.DAS_proyecto1" parent="Theme.Material3.DayNight.NoActionBar">
         <!-- Customize your light theme here. -->
         <!-- <item name="colorPrimary">@color/my_light_primary</item> -->
+        <item name="android:fontFamily">@font/playfair_regular</item>
     </style>
 
     <style name="Theme.DAS_proyecto1" parent="Base.Theme.DAS_proyecto1" />

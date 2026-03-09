@@ -15,13 +15,11 @@
             android:id="@+id/toolbar"
             android:layout_width="match_parent"
             android:layout_height="?attr/actionBarSize"
-            android:background="@color/rosaclaro"
-            android:fontFamily="@font/playfair_semibolditalic"
-            app:titleTextColor="@color/black" />
+            android:background="@android:color/system_accent3_100"
+            app:titleTextColor="#141212" />
 
         <FrameLayout
             android:id="@+id/fragment_container"
-            android:background="@color/grisclaro"
             android:layout_width="match_parent"
             android:layout_height="match_parent" />
     </LinearLayout>
