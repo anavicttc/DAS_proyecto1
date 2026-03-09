@@ -47,10 +47,10 @@ public class MainActivity extends AppCompatActivity {
                 fragmentSeleccionado = new MenuSemanalFragment();
                 toolbar.setTitle("Menú Semanal");
             } else if (itemId == R.id.nav_lista_compra) {
-                //lista de la compra
+                fragmentSeleccionado = new ListaCompraFragment();
                 toolbar.setTitle("Lista de la Compra");
             } else if (itemId == R.id.nav_ideas_comer) {
-                //ideas para comer
+                fragmentSeleccionado = new IdeasComerFragment();//ideas para comer
                 toolbar.setTitle("Ideas Para Comer");
             }
 

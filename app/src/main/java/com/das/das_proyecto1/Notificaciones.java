@@ -14,16 +14,21 @@ public class Notificaciones extends BroadcastReceiver {
         NotificationManager manager = (NotificationManager) context.getSystemService(Context.NOTIFICATION_SERVICE);
         String channelId = "menu_channel";
 
-        // Crear canal para versiones Android 8.0+
+        // Crear canal para versiones Android 8.0+ REVISARRRR
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.O) {
-            NotificationChannel channel = new NotificationChannel(channelId, "Recordatorio Menú", NotificationManager.IMPORTANCE_DEFAULT);
+            NotificationChannel channel = new NotificationChannel(channelId, "Recordatorios", NotificationManager.IMPORTANCE_DEFAULT);
             manager.createNotificationChannel(channel);
         }
+        String titulo = intent.getStringExtra("titulo_notificacion");
+        String texto = intent.getStringExtra("texto_notificacion");
 
+        //mensaje por defecto por si no se pasa nada
+        if (titulo == null) titulo = "¿Qué hay para comer hoy?";
+        if (texto == null) texto = "Revisa tu menú semanal para no olvidar tus platos.";
         NotificationCompat.Builder builder = new NotificationCompat.Builder(context, channelId)
                 .setSmallIcon(android.R.drawable.ic_dialog_info)
-                .setContentTitle("¿Qué hay para comer hoy?")
-                .setContentText("Revisa tu menú semanal para no olvidar tus platos.")
+                .setContentTitle(titulo)
+                .setContentText(texto)
                 .setPriority(NotificationCompat.PRIORITY_DEFAULT)
                 .setAutoCancel(true);
 
