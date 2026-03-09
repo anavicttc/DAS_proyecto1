@@ -17,7 +17,9 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_alignParentBottom="true"
+        android:layout_marginBottom="10dp"
+        android:backgroundTint="@color/rosa"
         android:text="@string/anadir_plato"
-        android:background="@color/rosa"/>
+        android:fontFamily="@font/playfair_regular" />
 
 </RelativeLayout>

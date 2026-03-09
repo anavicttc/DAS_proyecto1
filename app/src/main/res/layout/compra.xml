@@ -14,7 +14,7 @@
         android:layout_height="wrap_content"
         android:layout_weight="1"
         android:textSize="18sp"
-        android:textColor="#006064"
+        android:textColor="@color/azulraro"
         android:textStyle="bold"/>
 
     <ImageView

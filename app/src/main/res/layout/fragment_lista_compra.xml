@@ -21,9 +21,9 @@
 
         <Button
             android:id="@+id/btnAddProducto"
-            android:background="@color/verde"
-            android:layout_width="wrap_content"
+            android:layout_width="149dp"
             android:layout_height="wrap_content"
+            android:background="@color/verde"
             android:text="@string/anadir_mensaje" />
     </LinearLayout>
 
